@@ -9,16 +9,21 @@ function getNotificationDetails(message, customTitle) {
       ? message
       : "Something went wrong. Please try again.";
 
-  const normalized = text.toLowerCase();
+  const normalizedMessage = text.toLowerCase();
+  const normalizedTitle = (customTitle || "").toLowerCase();
 
   const isError =
     /failed|error|unable|invalid|could not|cannot|rejected/.test(
-      normalized
-    );
+      normalizedMessage
+    ) ||
+    /failed|error|invalid/.test(normalizedTitle);
 
   const isSuccess =
-    /successfully|success|downloaded|completed|created|updated|approved|submitted/.test(
-      normalized
+    /successfully|success|downloaded|completed|created|updated|approved|submitted|welcome back|signed in|logged in/.test(
+      normalizedMessage
+    ) ||
+    /successful|created|updated|deleted|downloaded|approved|submitted|completed|signed in|logged in/.test(
+      normalizedTitle
     );
 
   return {
@@ -37,7 +42,7 @@ function getNotificationDetails(message, customTitle) {
           : "Validation Required"),
 
     message: text
-      .replace(/^(?:✅|❌|⚠️)\s*/u, "")
+      .replace(/^[✅❌⚠️]\s*/, "")
       .trim(),
   };
 }

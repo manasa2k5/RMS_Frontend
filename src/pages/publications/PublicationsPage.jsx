@@ -480,6 +480,13 @@ const PublicationsPage = () => {
                               href={pub.upload}
                               target="_blank"
                               rel="noreferrer"
+                              onClick={() =>
+                                notify(
+                                  "The publication file has downloaded successfully.",
+                                  null,
+                                  "Publication Downloaded"
+                                )
+                              }
                               className="text-link"
                             >
                               Download
